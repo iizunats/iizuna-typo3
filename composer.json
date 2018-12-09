@@ -36,9 +36,21 @@
 		"php": ">=7.0.0",
 		"typo3/cms-core": "~8.7.0||~9.5.0"
 	},
+	"require-dev": {
+		"typo3/testing-framework": "~2.0.0"
+	},
+	"config": {
+		"preferred-install": {
+			"*": "dist"
+		},
+		"vendor-dir": ".Build/vendor"
+	},
 	"replace": {
 		"iizuna": "self.version",
 		"typo3-ter/iizuna": "self.version"
+	},
+	"scripts": {
+		"ci:tests:unit": "phpunit -c .Build/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml Tests/Unit/"
 	},
 	"homepage": "https://github.com/iizunats/iizuna-typo3",
 	"support": {
