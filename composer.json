@@ -1,0 +1,47 @@
+{
+	"name": "iizunats/iizuna",
+	"type": "typo3-cms-extension",
+	"description": "A TYPO3 Extension that allows the use of server-side rendered but client side hydrated applications.",
+	"repositories": [
+		{
+			"type": "composer",
+			"url": "https://composer.typo3.org/"
+		}
+	],
+	"autoload": {
+		"psr-4": {
+			"iizunats\\iizuna\\": "Classes/"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"iizunats\\iizuna\\Tests\\": "Tests"
+		}
+	},
+	"keywords": [
+		"TYPO3 CMS",
+		"iizuna",
+		"templates",
+		"frontend"
+	],
+	"authors": [
+		{
+			"name": "Tim Rücker",
+			"email": "tim.ruecker@iizunats.com",
+			"role": "Developer",
+			"homepage": "https://github.com/Nano1237"
+		}
+	],
+	"require": {
+		"php": ">=7.0.0",
+		"typo3/cms-core": "~8.7.0||~9.5.0"
+	},
+	"replace": {
+		"iizuna": "self.version",
+		"typo3-ter/iizuna": "self.version"
+	},
+	"homepage": "https://github.com/iizunats/iizuna-typo3",
+	"support": {
+		"issues": "https://github.com/iizunats/iizuna-typo3/issues"
+	}
+}
