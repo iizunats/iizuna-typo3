@@ -15,7 +15,7 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 class PartialCache extends AbstractEntity {
 
 	/**
-	 * path
+	 * clearPath
 	 *
 	 * @var string
 	 */

@@ -3,30 +3,31 @@
 namespace iizunats\iizuna\Decoder;
 
 /**
- * Class TemplateUtility
+ * Class UrlDecoder
  *
  * @author Tim Rücker <tim.ruecker@iizunats.com>
- * @package iizunats\iizuna\Utility
+ * @package iizunats\iizuna\Decoder
  */
 class UrlDecoder {
 
 	/**
-	 * pObject
+	 * typoScriptFrontendController
 	 *
 	 * @var \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
 	 */
-	protected $pObject = null;
+	protected $typoScriptFrontendController = null;
 
 
 	/**
-	 * Decodes the URL. This function is called from \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController::checkAlternativeIdMethods()
+	 * Decodes the URL.
+	 * This function is called from \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController::checkAlternativeIdMethods()
 	 *
 	 * @param array $params
 	 *
 	 * @return void
 	 */
 	public function decodeUrl (array $params) {
-		$this->pObject = $params['pObj'];
+		$this->typoScriptFrontendController = $params['pObj'];
 		if ($this->canDecodeUrl()) {
 			$this->outputTemplateForUrl();
 		}
@@ -34,19 +35,20 @@ class UrlDecoder {
 
 
 	/**
-	 * Either outputs the content if the given partial directly or does nothing resulting in calling the next hook
+	 * Either outputs the content if the given partial directly or does nothing resulting in calling the next hook.
+	 * We don't interfere in any other logic by this concept
 	 */
 	private function outputTemplateForUrl () {
-		/** @var \iizunats\iizuna\Domain\Model\PartialCache $ModelForPath */
-		$ModelForPath = $this->getPartialForPath($this->pObject->siteScript);
-		if ($ModelForPath !== null) {
-			exit($ModelForPath);
+		$partialTemplate = $this->getPartialForPath($this->typoScriptFrontendController->siteScript);
+		if ($partialTemplate !== null) {
+			exit($partialTemplate);
 		}
 	}
 
 
 	/**
-	 * Tries to get a partial from the database based by the passed path
+	 * Tries to get a partial from the database based by the passed path.
+	 * If we can't find any cached partial, return null
 	 *
 	 * @param string $path
 	 *
@@ -73,7 +75,7 @@ class UrlDecoder {
 	 *
 	 * @return bool
 	 */
-	private function canDecodeUrl () {
-		return strpos($this->pObject->siteScript, 'iizuna') === 0;
+	private function canDecodeUrl (): bool {
+		return strpos($this->typoScriptFrontendController->siteScript, 'iizuna') === 0;
 	}
 }

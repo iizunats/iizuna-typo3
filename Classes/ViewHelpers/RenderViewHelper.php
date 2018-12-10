@@ -2,9 +2,7 @@
 
 namespace iizunats\iizuna\ViewHelpers;
 
-use iizunats\iizuna\Domain\Model\PartialCache;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
+use iizunats\iizuna\Utility\ApiUtility;
 use TYPO3\CMS\Fluid\Core\Rendering\RenderingContextInterface;
 
 
@@ -26,6 +24,9 @@ class RenderViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\RenderViewHelper {
 	protected $partialCacheRepository = null;
 
 
+	/**
+	 * We add another argument to the base f:render viewhelper.
+	 */
 	public function initializeArguments () {
 		$this->registerArgument('iizunaComponent', 'string', 'Name of the iizuna component selector', true);
 	}
@@ -40,6 +41,8 @@ class RenderViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\RenderViewHelper {
 	 * @return string
 	 */
 	public function render ($section = null, $partial = null, $arguments = [], $optional = false) {
+		$cHash = $this->partialCacheRepository->getCacheHashByRenderedPartial($this->renderingContext, $partial);
+
 		return static::renderStatic(
 			[
 				'section'         => $section,
@@ -47,7 +50,7 @@ class RenderViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\RenderViewHelper {
 				'arguments'       => $arguments,
 				'optional'        => $optional,
 				'iizunaComponent' => $this->arguments['iizunaComponent'],
-				'cacheHash'       => $this->getCacheHash($partial),
+				'cacheHash'       => $cHash,
 			],
 			$this->buildRenderChildrenClosure(),
 			$this->renderingContext
@@ -55,61 +58,35 @@ class RenderViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\RenderViewHelper {
 	}
 
 
-	private function getCacheHash ($partial) {
-		$viewHelperVariableContainer = $this->renderingContext->getViewHelperVariableContainer();
-		$view = $viewHelperVariableContainer->getView();
-		$method = new \ReflectionMethod(\TYPO3\CMS\Fluid\View\TemplateView::class, 'getPartialSource');
-		$method->setAccessible(true);
-		$template = $method->invoke($view, $partial);
-		$this->createCacheEntry($template);
-
-		return md5($template);
+	/**
+	 * Adds the wrapper to the partial that is later used by iizuna zu receive the template information
+	 *
+	 * @param string $iizunaComponent
+	 * @param string $templatePath
+	 * @param string $childContent
+	 *
+	 * @return string
+	 */
+	private static function wrapChildrenInComponentWrapper (string $iizunaComponent, string $templatePath, string $childContent): string {
+		return "<div $iizunaComponent template-path=\"$templatePath\">$childContent</div>";
 	}
 
 
-	private function createCacheEntry ($template) {
-		$hash = md5($template);
-		$Model = $this->partialCacheRepository->findOneByHash($hash);
-		if ($Model === null) {
-			/** @var PartialCache $PartialCache */
-			$PartialCache = GeneralUtility::makeInstance(PartialCache::class);
-			$PartialCache->setHash($hash);
-			$PartialCache->setPartial(trim($template));
-			$PartialCache->setClearPath(self::buildIizunaPath($this->renderingContext, $this->arguments['partial'], false));
-			$this->partialCacheRepository->add($PartialCache);
-			/** @var PersistenceManager $PersistenceManager */
-			$PersistenceManager = GeneralUtility::makeInstance(PersistenceManager::class);
-			$PersistenceManager->persistAll();
-		}
-	}
-
-
-	private static function getBaseUrl () {
-		$backendUtility = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Backend\\Utility\\BackendUtility');
-		$rootLine = $backendUtility->BEgetRootline(1);
-		$TSObj = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\TypoScript\\TemplateService');
-		$TSObj->tt_track = 0;
-		$TSObj->init();
-		$TSObj->runThroughTemplates($rootLine);
-		$TSObj->generateConfig();
-
-		$TS = $TSObj->setup;
-
-		return !$TS['config.']['baseURL'] ? 'http://' . $_SERVER['SERVER_NAME'] . '/' : $TS['config.']['baseURL'];
-	}
-
-
-	private static function buildIizunaPath (RenderingContextInterface $renderingContext, $cacheHash, $df = true) {
-		$pluginName = $renderingContext->getControllerContext()->getRequest()->getPluginName();
-		$pluginNameUnderscore = GeneralUtility::camelCaseToLowerCaseUnderscored($pluginName);
-
-		return ($df ? self::getBaseUrl() : '') . "iizuna/$pluginNameUnderscore/$cacheHash";
-	}
-
-
+	/**
+	 * Renders the children of this viewhelper (basically the content of the partial that should be used) and adds a wrapper to the content
+	 * for iizuna to get the templates from an api
+	 *
+	 * @param array $arguments
+	 * @param \Closure $renderChildrenClosure
+	 * @param \TYPO3\CMS\Fluid\Core\Rendering\RenderingContextInterface $renderingContext
+	 *
+	 * @return string
+	 */
 	public static function renderStatic (array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext) {
-		return '<div ' . $arguments['iizunaComponent'] . ' template-path="' . self::buildIizunaPath($renderingContext, $arguments['partial']) . '">' .
+		return self::wrapChildrenInComponentWrapper(
+			$arguments['iizunaComponent'],
+			ApiUtility::buildIizunaPath($renderingContext, $arguments['partial']),
 			parent::renderStatic($arguments, $renderChildrenClosure, $renderingContext)
-			. '</div>';
+		);
 	}
 }

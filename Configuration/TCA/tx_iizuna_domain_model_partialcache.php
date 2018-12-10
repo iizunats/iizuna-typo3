@@ -26,7 +26,7 @@ return [
 			'fe_group'  => 'fe_group',
 		],
 		'searchFields'             => 'clear_path,hash,partial',
-		'iconfile'                 => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('iizuna') . 'Resources/Public/Icons/tx_iizuna_domain_model_partialcache.gif',
+		'iconfile'                 => \TYPO3\CMS\Core\Utility\PathUtility::getAbsoluteWebPath('iizuna') . 'Resources/Public/Icons/tx_iizuna_domain_model_partialcache.gif',
 	],
 	'interface' => [
 		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, clear_path, hash, partial',
