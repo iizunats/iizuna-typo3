@@ -11,7 +11,7 @@ $EM_CONF['iizuna'] = [
 	'author_email'     => 'tim.ruecker@iizunats.com',
 	'constraints'      => [
 		'depends' => [
-			'typo3' => '8.7.13-9.5.99',
+			'typo3' => '7.6.0-9.5.99',
 			'php'   => '7.0.0-0.0.0',
 		],
 	],

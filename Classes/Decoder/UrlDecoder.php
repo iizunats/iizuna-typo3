@@ -2,6 +2,11 @@
 
 namespace iizunats\iizuna\Decoder;
 
+use iizunats\iizuna\Utility\PartialRegistrationUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
+
+
 /**
  * Class TemplateUtility
  *
@@ -37,10 +42,9 @@ class UrlDecoder {
 	 * Either outputs the content if the given partial directly or does nothing resulting in calling the next hook
 	 */
 	private function outputTemplateForUrl () {
-		/** @var \iizunats\iizuna\Domain\Model\PartialCache $ModelForPath */
-		$ModelForPath = $this->getPartialForPath($this->pObject->siteScript);
-		if ($ModelForPath !== null) {
-			exit($ModelForPath);
+		$partialContent = $this->getPartialForPath($this->pObject->siteScript);
+		if ($partialContent !== null) {
+			exit($partialContent);
 		}
 	}
 
@@ -53,14 +57,11 @@ class UrlDecoder {
 	 * @return null|string
 	 */
 	private function getPartialForPath (string $path) {
-		$rows = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('partial', 'tx_iizuna_domain_model_partialcache',
-			'clear_path=' . $GLOBALS['TYPO3_DB']->fullQuoteStr($path, 'tx_iizuna_domain_model_partialcache')
-		);
-		foreach ($rows as $row) {
-			if ($row['partial'] !== '') {
-				return $row['partial'];
-			}
-			break;
+		list($iizuna, $extension, $partial) = explode('/', $path, 3);
+		/** @var \iizunats\iizuna\Utility\PartialRegistrationUtility $partialCache */
+		$partialCache = GeneralUtility::makeInstance(PartialRegistrationUtility::class);
+		if ($partialCache->isRegistered($extension, $partial)) {
+			return $partialCache->getPartial($extension, $partial);
 		}
 
 		return null;
