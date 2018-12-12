@@ -20,17 +20,17 @@ class UrlDecoder {
 	 *
 	 * @var \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
 	 */
-	protected $pObject = null;
+	protected $typoScriptFrontendController = null;
 	/**
 	 * partialCache
 	 *
 	 * @var PartialRegistrationUtility
 	 */
-	protected $partialCache = null;
+	protected $partialRegistrationUtility = null;
 
 
 	public function __construct () {
-		$this->partialCache = GeneralUtility::makeInstance(PartialRegistrationUtility::class);
+		$this->partialRegistrationUtility = GeneralUtility::makeInstance(PartialRegistrationUtility::class);
 	}
 
 
@@ -42,7 +42,7 @@ class UrlDecoder {
 	 * @return void
 	 */
 	public function decodeUrl (array $params) {
-		$this->pObject = $params['pObj'];
+		$this->typoScriptFrontendController = $params['pObj'];
 		if ($this->canDecodeUrl()) {
 			$this->outputTemplateForUrl();
 		}
@@ -53,7 +53,7 @@ class UrlDecoder {
 	 * Either outputs the content if the given partial directly or does nothing resulting in calling the next hook
 	 */
 	private function outputTemplateForUrl () {
-		$partialContent = $this->getPartialForPath($this->pObject->siteScript);
+		$partialContent = $this->getPartialForPath($this->typoScriptFrontendController->siteScript);
 		if ($partialContent !== null) {
 			exit($partialContent);
 		}
@@ -70,8 +70,8 @@ class UrlDecoder {
 	private function getPartialForPath (string $path) {
 		list($url, $arguments) = explode('?', $path);
 		list($iizuna, $extension, $partial) = explode('/', $url, 3);
-		if ($this->partialCache->isRegistered($extension, $partial)) {
-			$configuration = $this->partialCache->getConfiguration($extension, $partial);
+		if ($this->partialRegistrationUtility->isRegistered($extension, $partial)) {
+			$configuration = $this->partialRegistrationUtility->getConfiguration($extension, $partial);
 			$passingArguments = [];
 			foreach ($configuration[2] as $allowedArguments) {
 				if (isset($_GET[$allowedArguments])) {
@@ -79,7 +79,7 @@ class UrlDecoder {
 				}
 			}
 
-			return $this->partialCache->getPartial($extension, $partial, $passingArguments);
+			return $this->partialRegistrationUtility->getPartial($extension, $partial, $passingArguments);
 		}
 
 		return null;
@@ -93,6 +93,6 @@ class UrlDecoder {
 	 * @return bool
 	 */
 	private function canDecodeUrl () {
-		return strpos($this->pObject->siteScript, 'iizuna') === 0;
+		return strpos($this->typoScriptFrontendController->siteScript, 'iizuna') === 0;
 	}
 }
