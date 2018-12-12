@@ -57,11 +57,20 @@ class UrlDecoder {
 	 * @return null|string
 	 */
 	private function getPartialForPath (string $path) {
-		list($iizuna, $extension, $partial) = explode('/', $path, 3);
+		list($url, $arguments) = explode('?', $path);
+		list($iizuna, $extension, $partial) = explode('/', $url, 3);
 		/** @var \iizunats\iizuna\Utility\PartialRegistrationUtility $partialCache */
 		$partialCache = GeneralUtility::makeInstance(PartialRegistrationUtility::class);
 		if ($partialCache->isRegistered($extension, $partial)) {
-			return $partialCache->getPartial($extension, $partial);
+			$configuration = $partialCache->getConfiguration($extension, $partial);
+			$passingArguments = [];
+			foreach ($configuration[2] as $allowedArguments) {
+				if (isset($_GET[$allowedArguments])) {
+					$passingArguments[$allowedArguments] = strip_tags(urldecode($_GET[$allowedArguments]));
+				}
+			}
+
+			return $partialCache->getPartial($extension, $partial, $passingArguments);
 		}
 
 		return null;

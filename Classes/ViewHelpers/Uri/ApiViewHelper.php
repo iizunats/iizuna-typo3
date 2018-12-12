@@ -22,11 +22,12 @@ class ApiViewHelper extends AbstractViewHelper {
 	 * @param string $partial
 	 * @param string $extension
 	 * @param bool $absolute
+	 * @param array $arguments
 	 *
 	 * @return string
 	 */
-	public function render ($partial, $extension = null, $absolute = true) {
-		return $this->buildIizunaPath($this->renderingContext, $partial, $extension, $absolute);
+	public function render ($partial, $extension = null, $absolute = true, array $arguments = []) {
+		return $this->buildIizunaPath($this->renderingContext, $partial, $extension, $absolute, $arguments);
 	}
 
 
@@ -65,14 +66,15 @@ class ApiViewHelper extends AbstractViewHelper {
 	/**
 	 * Returns the path to the iizuna api for the given rendering context and partial
 	 *
-	 * @param \TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface $renderingContext
+	 * @param RenderingContextInterface $renderingContext
 	 * @param string $partial
 	 * @param string $extension
 	 * @param bool $absolute
+	 * @param array $arguments
 	 *
 	 * @return string
 	 */
-	private static function buildIizunaPath (RenderingContextInterface $renderingContext, string $partial, $extension = null, $absolute = true) {
+	private static function buildIizunaPath (RenderingContextInterface $renderingContext, string $partial, $extension = null, $absolute = true, array $arguments = []) {
 		if ($extension !== null) {
 			$pluginNameUnderscore = $extension;
 		} else {
@@ -80,6 +82,6 @@ class ApiViewHelper extends AbstractViewHelper {
 			$pluginNameUnderscore = GeneralUtility::camelCaseToLowerCaseUnderscored($pluginName);
 		}
 
-		return ($absolute ? self::getBaseUrl() : '') . "iizuna/$pluginNameUnderscore/$partial";
+		return ($absolute ? self::getBaseUrl() : '') . "iizuna/$pluginNameUnderscore/$partial" . (!empty($arguments) ? ('?' . http_build_query($arguments)) : '');
 	}
 }

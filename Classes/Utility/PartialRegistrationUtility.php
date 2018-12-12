@@ -30,9 +30,10 @@ class PartialRegistrationUtility implements SingletonInterface {
 	 *
 	 * @param string $extension The extension name (preferable in lower_case_underscored)
 	 * @param string $partial The Path to the Partial (excluding the path to the partial folder itself)
+	 * @param array $allowedArguments
 	 */
-	public function register (string $extension, string $partial) {
-		$this->registered[] = [$extension, $partial];
+	public function register (string $extension, string $partial, array $allowedArguments = []) {
+		$this->registered[] = [$extension, $partial, $allowedArguments];
 	}
 
 
@@ -45,13 +46,24 @@ class PartialRegistrationUtility implements SingletonInterface {
 	 * @return bool
 	 */
 	public function isRegistered (string $extensionName, string $partialName) {
-		foreach ($this->registered as list($registeredExtension, $registeredPartial)) {
+		return $this->getConfiguration($extensionName, $partialName) !== null;
+	}
+
+
+	/**
+	 * @param string $extensionName
+	 * @param string $partialName
+	 *
+	 * @return array|null
+	 */
+	public function getConfiguration (string $extensionName, string $partialName) {
+		foreach ($this->registered as $key => list($registeredExtension, $registeredPartial)) {
 			if ($registeredExtension === $extensionName && $partialName === $registeredPartial) {
-				return true;
+				return $this->registered[$key];
 			}
 		}
 
-		return false;
+		return null;
 	}
 
 
@@ -62,11 +74,13 @@ class PartialRegistrationUtility implements SingletonInterface {
 	 *
 	 * @param string $extension The extension name (preferable in lower_case_underscored)
 	 * @param string $partial The Path to the Partial (excluding the path to the partial folder itself)
+	 * @param array $passingArguments
 	 *
 	 * @return mixed|string
 	 */
-	public function getPartial (string $extension, string $partial) {
+	public function getPartial (string $extension, string $partial, array $passingArguments = []) {
 		$view = $this->getPreparedViewForExtension($extension);
+		$view->assignMultiple($passingArguments);
 		$partial = $this->trimPartialPath($partial);
 		$extension = GeneralUtility::camelCaseToLowerCaseUnderscored($extension);
 		$absolutePartialPath = GeneralUtility::getFileAbsFileName("EXT:$extension/Resources/Private/Partials/$partial.html");
@@ -100,12 +114,12 @@ class PartialRegistrationUtility implements SingletonInterface {
 	 */
 	private function getPartialWithoutVariableContent (TemplateView $view, string $absolutePartialPath): string {
 		$partialContent = file_get_contents($absolutePartialPath);
-		$partialContentWithEscapedVariables = preg_replace('/{([^}]+)}/', '°$1|', $partialContent);
+		$partialContentWithEscapedVariables = preg_replace('/{([^}=:]+)}/', 'IIZUSTART$1|IIZUEND', $partialContent);
 
 		return $this->createTemporaryFileWith($partialContentWithEscapedVariables, function ($tmpFilePath) use ($view) {
 			$view->setTemplatePathAndFilename($tmpFilePath);
 
-			return preg_replace('/°([^|]+)|/', '\${$1}', $view->render());
+			return preg_replace('/IIZUSTART([^|]+)\|IIZUEND/', '\${$1}', $view->render());
 		});
 	}
 
