@@ -113,7 +113,7 @@ class PartialRegistrationUtility implements SingletonInterface {
 	 * @return string
 	 */
 	private function getPartialWithoutVariableContent (TemplateView $view, string $absolutePartialPath): string {
-		$partialContent = file_get_contents($absolutePartialPath);
+		$partialContent = GeneralUtility::getURL($absolutePartialPath);
 		$partialContentWithEscapedVariables = preg_replace('/{([^}=:]+)}/', 'IIZUSTART$1|IIZUEND', $partialContent);
 
 		return $this->createTemporaryFileWith($partialContentWithEscapedVariables, function ($tmpFilePath) use ($view) {
@@ -134,11 +134,10 @@ class PartialRegistrationUtility implements SingletonInterface {
 	 * @return mixed
 	 */
 	private function createTemporaryFileWith (string $temporaryFileContent, \Closure $callable): string {
-		$tempFile = tmpfile();
-		fwrite($tempFile, $temporaryFileContent);
-		$path = stream_get_meta_data($tempFile)['uri'];
-		$ret = $callable($path);
-		unlink($path);
+		$tmpName = GeneralUtility::tempnam('iizuna_');
+		GeneralUtility::writeFile($tmpName, $temporaryFileContent);
+		$ret = $callable($tmpName);
+		GeneralUtility::unlink_tempfile($tmpName);
 
 		return $ret;
 	}

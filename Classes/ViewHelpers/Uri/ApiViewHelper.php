@@ -39,17 +39,17 @@ class ApiViewHelper extends AbstractViewHelper {
 	private static function getBaseUrl () {
 		$backendUtility = GeneralUtility::makeInstance(BackendUtility::class);
 		$rootLine = $backendUtility->BEgetRootline(1);
-		$TSObj = GeneralUtility::makeInstance(TemplateService::class);
-		$TSObj->tt_track = 0;
-		$TSObj->init();
-		$TSObj->runThroughTemplates($rootLine);
-		$TSObj->generateConfig();
+		$TemplateService = GeneralUtility::makeInstance(TemplateService::class);
+		$TemplateService->tt_track = 0;
+		$TemplateService->init();
+		$TemplateService->runThroughTemplates($rootLine);
+		$TemplateService->generateConfig();
 
-		$TS = $TSObj->setup;
+		$typoScript = $TemplateService->setup;
 
 		$serverName = filter_input(INPUT_SERVER, 'SERVER_NAME', FILTER_SANITIZE_URL);
 
-		return !$TS['config.']['baseURL'] ? self::getProtocol() . $serverName . '/' : $TS['config.']['baseURL'];
+		return !$typoScript['config.']['baseURL'] ? self::getProtocol() . $serverName . '/' : $typoScript['config.']['baseURL'];
 	}
 
 
@@ -79,13 +79,11 @@ class ApiViewHelper extends AbstractViewHelper {
 	 * @return string
 	 */
 	private static function buildIizunaPath (RenderingContextInterface $renderingContext, string $partial, $extension = null, $absolute = true, array $arguments = []) {
-		if ($extension !== null) {
-			$pluginNameUnderscore = $extension;
-		} else {
+		if ($extension === null) {
 			$pluginName = $renderingContext->getControllerContext()->getRequest()->getPluginName();
-			$pluginNameUnderscore = GeneralUtility::camelCaseToLowerCaseUnderscored($pluginName);
+			$extension = GeneralUtility::camelCaseToLowerCaseUnderscored($pluginName);
 		}
 
-		return ($absolute ? self::getBaseUrl() : '') . "iizuna/$pluginNameUnderscore/$partial" . (!empty($arguments) ? ('?' . http_build_query($arguments)) : '');
+		return ($absolute ? self::getBaseUrl() : '') . "iizuna/$extension/$partial" . (!empty($arguments) ? ('?' . http_build_query($arguments)) : '');
 	}
 }
