@@ -1,6 +1,6 @@
 <?php
 if (!\defined('TYPO3_MODE')) {
-	die('Access denied.');
+	exit('Access denied.');
 }
 
 //Register a hook that allows us to listen for requests made to any path starting with "/iizuna/".

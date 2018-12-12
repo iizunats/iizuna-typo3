@@ -47,7 +47,9 @@ class ApiViewHelper extends AbstractViewHelper {
 
 		$TS = $TSObj->setup;
 
-		return !$TS['config.']['baseURL'] ? self::getProtocol() . $_SERVER['SERVER_NAME'] . '/' : $TS['config.']['baseURL'];
+		$serverName = filter_input(INPUT_SERVER, 'SERVER_NAME', FILTER_SANITIZE_URL);
+
+		return !$TS['config.']['baseURL'] ? self::getProtocol() . $serverName . '/' : $TS['config.']['baseURL'];
 	}
 
 
@@ -57,7 +59,9 @@ class ApiViewHelper extends AbstractViewHelper {
 	 * @return string
 	 */
 	private static function getProtocol (): string {
-		$secureRequest = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443);
+		$https = filter_input(INPUT_SERVER, 'HTTPS', FILTER_SANITIZE_STRING);
+		$port = filter_input(INPUT_SERVER, 'SERVER_PORT', FILTER_SANITIZE_NUMBER_INT);
+		$secureRequest = ((!empty($https) && $https != 'off') || $port == 443);
 
 		return 'http' . ($secureRequest ? 's' : '') . '://';
 	}
