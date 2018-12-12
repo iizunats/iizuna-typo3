@@ -1,0 +1,33 @@
+{
+	"name": "iizuna-type-example",
+	"version": "1.0.0",
+	"description": "Example Extension for the iizuna-typo3 extension",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/iizunats/iizuna-typo3.git"
+	},
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/iizunats/iizuna-typo3/issues"
+	},
+	"homepage": "https://iizunats.com",
+	"devDependencies": {
+		"browserify": "^16.2.3",
+		"gulp": "^3.9.1",
+		"gulp-cli": "^2.0.1",
+		"gulp-typescript": "^5.0.0-alpha.3",
+		"tsify": "^4.0.0",
+		"typescript": "^3.2.2",
+		"vinyl-source-stream": "^2.0.0"
+	},
+	"dependencies": {
+		"iizuna": "^3.1.2",
+		"jquery": "^3.3.1",
+		"@types/jquery": "^3.3.25"
+	}
+}

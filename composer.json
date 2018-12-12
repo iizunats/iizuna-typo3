@@ -10,12 +10,7 @@
 	],
 	"autoload": {
 		"psr-4": {
-			"iizunats\\iizuna\\": "Classes/"
-		}
-	},
-	"autoload-dev": {
-		"psr-4": {
-			"iizunats\\iizuna\\Tests\\": "Tests"
+			"iizunats\\IizunaExample\\": "Classes/"
 		}
 	},
 	"keywords": [
