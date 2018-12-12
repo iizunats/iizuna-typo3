@@ -21,6 +21,17 @@ class UrlDecoder {
 	 * @var \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
 	 */
 	protected $pObject = null;
+	/**
+	 * partialCache
+	 *
+	 * @var PartialRegistrationUtility
+	 */
+	protected $partialCache = null;
+
+
+	public function __construct () {
+		$this->partialCache = GeneralUtility::makeInstance(PartialRegistrationUtility::class);
+	}
 
 
 	/**
@@ -59,10 +70,8 @@ class UrlDecoder {
 	private function getPartialForPath (string $path) {
 		list($url, $arguments) = explode('?', $path);
 		list($iizuna, $extension, $partial) = explode('/', $url, 3);
-		/** @var \iizunats\iizuna\Utility\PartialRegistrationUtility $partialCache */
-		$partialCache = GeneralUtility::makeInstance(PartialRegistrationUtility::class);
-		if ($partialCache->isRegistered($extension, $partial)) {
-			$configuration = $partialCache->getConfiguration($extension, $partial);
+		if ($this->partialCache->isRegistered($extension, $partial)) {
+			$configuration = $this->partialCache->getConfiguration($extension, $partial);
 			$passingArguments = [];
 			foreach ($configuration[2] as $allowedArguments) {
 				if (isset($_GET[$allowedArguments])) {
@@ -70,7 +79,7 @@ class UrlDecoder {
 				}
 			}
 
-			return $partialCache->getPartial($extension, $partial, $passingArguments);
+			return $this->partialCache->getPartial($extension, $partial, $passingArguments);
 		}
 
 		return null;
