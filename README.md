@@ -3,7 +3,7 @@
 ![TYPO3 version](https://img.shields.io/badge/typo3-v0.0.1-blue.svg)
 [![Donate](https://img.shields.io/badge/donorbox-donate-blue.svg)](https://donorbox.org/iizuna)
 [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Create%20fast%20and%20reliable%20component%20based%20applications%20for%20server-side-rendered%20projects!&url=http://iizunats.com&via=IizunaTeam&hashtags=typescript,components,frontend,framework,developers)
-![iizuna](https://raw.githubusercontent.com/iizunats/iizuna-typo3/master/ext_icon.png | width=200)
+<img src="https://raw.githubusercontent.com/iizunats/iizuna-typo3/master/ext_icon.png" width="200">
 
 pronunciation: `/Īdzuna/`
 
