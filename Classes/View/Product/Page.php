@@ -2,7 +2,11 @@
 
 namespace iizunats\IizunaExample\View\Product;
 
-class Page extends \TYPO3\CMS\Extbase\Mvc\View\AbstractView {
+use TYPO3\CMS\Extbase\Mvc\View\AbstractView;
+
+
+
+class Page extends AbstractView {
 
 	public function render () {
 		header('Content-type:application/json; charset=UTF-8');

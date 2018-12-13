@@ -1,5 +1,5 @@
 {
-	"name": "iizunats/iizuna",
+	"name": "iizunats/iizuna-example",
 	"type": "typo3-cms-extension",
 	"description": "A TYPO3 Extension that allows the use of server-side rendered but client side hydrated applications.",
 	"repositories": [
@@ -27,10 +27,6 @@
 			"homepage": "https://github.com/Nano1237"
 		}
 	],
-	"require": {
-		"php": ">=7.0.0",
-		"typo3/cms-core": "~8.7.0||~9.5.0"
-	},
 	"require-dev": {
 		"typo3/testing-framework": "~2.0.0"
 	},
