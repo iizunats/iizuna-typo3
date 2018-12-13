@@ -23,7 +23,7 @@ return array(
 		),
 		'setToDefaultOnCopy'       => 'registrations',
 		'searchFields'             => 'title,description,',
-		'iconfile'                 => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('iizuna_example') . 'Resources/Public/Icons/tx_iizunaexample_domain_model_product.gif',
+		'iconfile'                 => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('ii_product') . 'Resources/Public/Icons/tx_iiproduct_domain_model_product.gif',
 	),
 	'interface' => array(
 		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, description',
@@ -71,8 +71,8 @@ return array(
 				'items'               => array(
 					array('', 0),
 				),
-				'foreign_table'       => 'tx_iizunaexample_domain_model_product',
-				'foreign_table_where' => 'AND tx_iizunaexample_domain_model_product.pid=###CURRENT_PID### AND tx_iizunaexample_domain_model_product.sys_language_uid IN (-1,0)',
+				'foreign_table'       => 'tx_iiproduct_domain_model_product',
+				'foreign_table_where' => 'AND tx_iiproduct_domain_model_product.pid=###CURRENT_PID### AND tx_iiproduct_domain_model_product.sys_language_uid IN (-1,0)',
 			),
 		),
 		'l10n_diffsource'  => array(

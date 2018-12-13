@@ -1,6 +1,6 @@
 <?php
 
-namespace iizunats\IizunaExample\Controller;
+namespace Iizunats\IiProduct\Controller;
 
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
@@ -11,7 +11,8 @@ class ProductController extends ActionController {
 	/**
 	 * productRepository
 	 *
-	 * @var \iizunats\IizunaExample\Domain\Repository\ProductRepository
+	 * @var \Iizunats\IiProduct\Domain\Repository\ProductRepository
+	 * @inject
 	 */
 	protected $productRepository = null;
 

@@ -1,14 +1,16 @@
-{namespace ii=iizunats\iizuna\ViewHelpers}
+{namespace ii=Iizunats\Iizuna\ViewHelpers}
 <section data-product data-page="{page}" data-template-source="{ii:uri.api(partial:'Product/ListItem')}">
 	<div data-product-list>
 		<f:if condition="{products}">
-			<f:for each="{products}" as="product">
-				<f:render partial="Product/ListItem" arguments="{product:product}" />
-			</f:for>
+			<f:then>
+				<f:for each="{products}" as="product">
+					<f:render partial="Product/ListItem" arguments="{product:product}" />
+				</f:for>
+			</f:then>
+			<f:else>
+				No products found :(
+			</f:else>
 		</f:if>
 	</div>
-	<f:alias map="{l: '{', r: '}'}">
-		<!-- ADD EXPLANATION FOR ALIAS!!!! -->
-		<button data-next-product-page="{f:link.action(action:'page',arguments:{page:'${l}page{r}'})}">Load more</button>
-	</f:alias>
+	<button data-next-product-page="{ii:uri.template(action:'page',templateArguments:{page:'page'})}">Load more</button>
 </section>

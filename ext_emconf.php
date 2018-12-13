@@ -1,6 +1,6 @@
 <?php
 
-$EM_CONF['iizuna_example'] = [
+$EM_CONF['ii_product'] = [
 	'title'            => 'iizuna-typo3 example',
 	'description'      => 'Example Extension for the iizuna-typo3 extension',
 	'category'         => 'fe',

@@ -2,17 +2,17 @@ Define your template and render the partials like always.
 Add the `data-template-source` to the main component which is responsible for api request and therefore for dynamic element creation.
 Use the iizuna `ApiViewHelper` for rendering the correct api url.
 ```html
-<!-- EXT:example/Resources/Private/Templates/Product/List.html -->
+<!-- EXT:product/Resources/Private/Templates/Product/List.html -->
 ```
 
 Also define the partial like always
 ```html
-<!-- EXT:example/Resources/Private/Partials/Controller/ListItem.html -->
+<!-- EXT:product/Resources/Private/Partials/Controller/ListItem.html -->
 ```
 
 You can also use viewhelpers like always!
 ```html
-<!-- EXT:example/Resources/Private/Partials/Controller/ListItemButton.html -->
+<!-- EXT:product/Resources/Private/Partials/Controller/ListItemButton.html -->
 ```
 
 But before you can usew the api, you have to register the partial in you `ext_localconf.php`. 
@@ -24,7 +24,7 @@ This is necessary for security reasons. Everyone could access every partial if w
 The rendered page could look like this if the user accesses the page and can only see two products
 ```html
 <!-- https://www.example.com/products (containing the product plugin of the example extension) -->
-<section data-product data-page="0" data-template-source="https://www.example.com/iizuna/example/Controller/ListItem">
+<section data-product data-page="0" data-template-source="https://www.example.com/iizuna/product/Controller/ListItem">
   <div data-product-list>
     <article data-product-list-item>
       <h2>Red Sneaker</h2>
@@ -37,7 +37,7 @@ The rendered page could look like this if the user accesses the page and can onl
       <button>Buy!</button>
     </article>
   </div>
-  <button data-next-product-page="https://www.example.com/products?tx_example_product[action]=page&tx_example_product[controller]=Product&tx_example_product[page]=${page}">Load more</button>
+  <button data-next-product-page="https://www.example.com/products?tx_product_product[action]=page&tx_product_product[controller]=Product&tx_product_product[page]=${page}">Load more</button>
 </section>
 ```
 

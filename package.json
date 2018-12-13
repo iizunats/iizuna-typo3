@@ -1,5 +1,5 @@
 {
-	"name": "iizuna-type-example",
+	"name": "iizuna-typo3-product",
 	"version": "1.0.0",
 	"description": "Example Extension for the iizuna-typo3 extension",
 	"main": "index.js",

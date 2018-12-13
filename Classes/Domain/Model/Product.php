@@ -1,6 +1,6 @@
 <?php
 
-namespace iizunats\IizunaExample\Domain\Model;
+namespace Iizunats\IiProduct\Domain\Model;
 
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 

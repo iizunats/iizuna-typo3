@@ -1,1 +1,1 @@
-page.includeJSFooter.iizuna-example = EXT:iizuna_example/Resources/Public/JavaScript/build.js
+page.includeJS.iizuna_example = EXT:ii_product/Resources/Public/JavaScript/build.js
