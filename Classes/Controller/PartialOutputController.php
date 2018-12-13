@@ -9,6 +9,14 @@ use TYPO3\CMS\Fluid\View\TemplateView;
 
 
 
+/**
+ * Class PartialOutputController
+ *
+ * This controller is used to bootstrap the rendering process of the partial.
+ *
+ * @author Tim Rücker <tim.ruecker@iizunats.com>
+ * @package Iizunats\Iizuna\Controller
+ */
 class PartialOutputController extends ActionController {
 
 	/**

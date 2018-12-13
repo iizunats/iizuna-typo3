@@ -13,6 +13,12 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 /**
  * Class ApiViewHelper
  *
+ * This ViewHelper returns the url to the iizuna partial api.
+ * The only required argument is the partial name which is exactly the same as the one passed to <f:render />.
+ *
+ * If the controller context is not correct, then set the "extension" argument and pass the name of the extension,
+ * from which the partial should be rendered
+ *
  * @author Tim Rücker <tim.ruecker@iizunats.com>
  * @package Iizunats\Iizuna\ViewHelpers\Uri
  */

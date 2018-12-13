@@ -9,6 +9,9 @@ use TYPO3\CMS\Core\SingletonInterface;
 /**
  * Class PartialRegistrationUtility
  *
+ * This class is used to register partials for latter output.
+ * If a partial was not registered that way, then it won't be shown for security reasons
+ *
  * @author Tim Rücker <tim.ruecker@iizunats.com>
  * @package Iizunats\Iizuna\Utility
  */
@@ -43,7 +46,7 @@ class PartialRegistrationUtility implements SingletonInterface {
 	 *
 	 * @return bool
 	 */
-	public function isRegistered (string $extensionName, string $partialName) {
+	public function isRegistered (string $extensionName, string $partialName): bool {
 		return $this->getConfiguration($extensionName, $partialName) !== null;
 	}
 

@@ -6,9 +6,37 @@ use TYPO3\CMS\Fluid\ViewHelpers\Uri\ActionViewHelper;
 
 
 
+/**
+ * Class TemplateViewHelper
+ *
+ * Basically the same as the f:uri.action ViewHelper but with one exception.
+ * Here you can set the "templateArguments" attribute to defined arguments that can later be filled by iizuna template.
+ *
+ * For example, you want to render the action link to the fooAction of the ExampleController in the dummy Extension.
+ * You would normaly pass the "bar" argument as follows:
+ *
+ * <f:uri.action extensionName="dummy" pluginName="plugin" controller="Example" action="foo" arguments="{bar:5}" />
+ *
+ * which would result in a link like the following:
+ *
+ * /index.php?id=1&tx_dummy_plugin[controller]=Example&tx_dummy_plugin[bar]=5&tx_dummy_plugin[action]=foo
+ *
+ * If you want to set the "tx_dummy_plugin[bar]=5" variable dynamic via javascript you are screwed (if you want to code clean).
+ *
+ * But if you use the TemplateViewHelper like this:
+ *
+ * <ii:uri.template extensionName="dummy" pluginName="plugin" controller="Example" action="foo" templateArguments="{bar:'jsBar'}" />
+ *
+ * The URL would look like this:
+ *
+ * /index.php?id=1&tx_dummy_plugin[controller]=Example&tx_dummy_plugin[bar]=${jsBar}&tx_dummy_plugin[action]=foo
+ *
+ * And the part with "tx_dummy_plugin[bar]=${jsBar}" could be replaced dynamically by the iizuna Template class.
+ *
+ * @author Tim Rücker <tim.ruecker@iizunats.com>
+ * @package Iizunats\Iizuna\ViewHelpers\Uri
+ */
 class TemplateViewHelper extends ActionViewHelper {
-
-
 
 	/**
 	 * Initialize arguments

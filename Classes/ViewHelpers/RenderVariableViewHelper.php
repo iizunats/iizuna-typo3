@@ -7,6 +7,14 @@ use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 
 
 
+/**
+ * Class RenderVariableViewHelper
+ *
+ * This ViewHelper is used when you really want to render a variable by fluid instead of letting it being replaced by a js template literal
+ *
+ * @author Tim Rücker <tim.ruecker@iizunats.com>
+ * @package Iizunats\Iizuna\ViewHelpers
+ */
 class RenderVariableViewHelper extends AbstractViewHelper {
 
 	/**
