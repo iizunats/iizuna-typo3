@@ -3,19 +3,16 @@
 	"type": "typo3-cms-extension",
 	"description": "A TYPO3 Extension that allows the use of server-side rendered but client side hydrated applications.",
 	"repositories": [
-		{
-			"type": "composer",
-			"url": "https://composer.typo3.org/"
-		}
+		{"type": "composer", "url": "https://composer.typo3.org/"}
 	],
 	"autoload": {
 		"psr-4": {
-			"iizunats\\iizuna\\": "Classes/"
+			"Iizunats\\Iizuna\\": "Classes/"
 		}
 	},
 	"autoload-dev": {
 		"psr-4": {
-			"iizunats\\iizuna\\Tests\\": "Tests"
+			"Iizunats\\Iizuna\\Tests\\": "Tests"
 		}
 	},
 	"keywords": [
