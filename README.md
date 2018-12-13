@@ -1,8 +1,5 @@
-# iizuna-typo3
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/084a649cad0148eeb728c89dc6ec1db8)](https://www.codacy.com/app/tim.ruecker/iizuna-typo3?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=iizunats/iizuna-typo3&amp;utm_campaign=Badge_Grade)
-![TYPO3 version](https://img.shields.io/badge/typo3-v0.0.1-blue.svg)
-[![Donate](https://img.shields.io/badge/donorbox-donate-blue.svg)](https://donorbox.org/iizuna)
-[![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Create%20fast%20and%20reliable%20component%20based%20applications%20for%20server-side-rendered%20projects!&url=http://iizunats.com&via=IizunaTeam&hashtags=typescript,components,frontend,framework,developers)
+# iizuna-typo3 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/084a649cad0148eeb728c89dc6ec1db8)](https://www.codacy.com/app/tim.ruecker/iizuna-typo3?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=iizunats/iizuna-typo3&amp;utm_campaign=Badge_Grade) ![TYPO3 version](https://img.shields.io/badge/typo3-v0.0.1-blue.svg) [![Donate](https://img.shields.io/badge/donorbox-donate-blue.svg)](https://donorbox.org/iizuna) [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Create%20fast%20and%20reliable%20component%20based%20applications%20for%20server-side-rendered%20projects!&url=http://iizunats.com&via=IizunaTeam&hashtags=typescript,components,frontend,framework,developers) 
+
 <img src="https://raw.githubusercontent.com/iizunats/iizuna-typo3/master/ext_icon.png" width="200">
 
 pronunciation: `/Īdzuna/`
