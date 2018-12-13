@@ -1,12 +1,12 @@
 <?php
 
-namespace iizunats\iizuna\ViewHelpers\Uri;
+namespace Iizunats\Iizuna\ViewHelpers\Uri;
 
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\TypoScript\TemplateService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Fluid\Core\Rendering\RenderingContext;
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
-use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 
 
 
@@ -14,7 +14,7 @@ use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
  * Class ApiViewHelper
  *
  * @author Tim Rücker <tim.ruecker@iizunats.com>
- * @package iizunats\iizuna\ViewHelpers\Uri
+ * @package Iizunats\Iizuna\ViewHelpers\Uri
  */
 class ApiViewHelper extends AbstractViewHelper {
 
@@ -70,7 +70,7 @@ class ApiViewHelper extends AbstractViewHelper {
 	/**
 	 * Returns the path to the iizuna api for the given rendering context and partial
 	 *
-	 * @param RenderingContextInterface $renderingContext
+	 * @param \TYPO3\CMS\Fluid\Core\Rendering\RenderingContext $renderingContext
 	 * @param string $partial
 	 * @param string $extension
 	 * @param bool $absolute
@@ -78,9 +78,9 @@ class ApiViewHelper extends AbstractViewHelper {
 	 *
 	 * @return string
 	 */
-	private static function buildIizunaPath (RenderingContextInterface $renderingContext, string $partial, $extension = null, $absolute = true, array $arguments = []) {
+	private static function buildIizunaPath (RenderingContext $renderingContext, string $partial, $extension = null, $absolute = true, array $arguments = []) {
 		if ($extension === null) {
-			$pluginName = $renderingContext->getControllerContext()->getRequest()->getPluginName();
+			$pluginName = $renderingContext->getControllerContext()->getRequest()->getControllerExtensionName();
 			$extension = GeneralUtility::camelCaseToLowerCaseUnderscored($pluginName);
 		}
 

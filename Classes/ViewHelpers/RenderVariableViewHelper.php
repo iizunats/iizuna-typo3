@@ -1,6 +1,6 @@
 <?php
 
-namespace iizunats\iizuna\ViewHelpers;
+namespace Iizunats\Iizuna\ViewHelpers;
 
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
