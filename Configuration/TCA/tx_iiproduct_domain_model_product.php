@@ -23,7 +23,7 @@ return array(
 		),
 		'setToDefaultOnCopy'       => 'registrations',
 		'searchFields'             => 'title,description,',
-		'iconfile'                 => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('ii_product') . 'Resources/Public/Icons/tx_iiproduct_domain_model_product.gif',
+		'iconfile'                 => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('ii_product') . 'Resources/Public/Icons/tx_iiproduct_domain_model_product.png',
 	),
 	'interface' => array(
 		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, description',

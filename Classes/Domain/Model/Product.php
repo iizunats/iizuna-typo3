@@ -6,6 +6,12 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
 
 
+/**
+ * Class Product
+ *
+ * @author Tim Rücker <tim.ruecker@iizunats.com>
+ * @package Iizunats\IiProduct\Domain\Model
+ */
 class Product extends AbstractEntity implements \JsonSerializable {
 
 	/**
@@ -55,7 +61,8 @@ class Product extends AbstractEntity implements \JsonSerializable {
 
 
 	/**
-	 * Returns the properties of this model as array
+	 * Returns the properties of this model as array.
+	 * Used by \Iizunats\IiProduct\View\Product\Page
 	 *
 	 * @return array
 	 */

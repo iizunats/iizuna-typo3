@@ -6,6 +6,12 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 
 
+/**
+ * Class ProductController
+ *
+ * @author Tim Rücker <tim.ruecker@iizunats.com>
+ * @package Iizunats\IiProduct\Controller
+ */
 class ProductController extends ActionController {
 
 	/**
@@ -27,7 +33,8 @@ class ProductController extends ActionController {
 
 
 	/**
-	 * Returns the next products as json based by the passed page
+	 * Returns the next products as json based by the passed page.
+	 * The json response is made by \Iizunats\IiProduct\View\Product\Page
 	 */
 	public function pageAction () {
 		$this->listAction();
