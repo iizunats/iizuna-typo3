@@ -69,8 +69,9 @@ class ApiRequestHandler extends AbstractRequestHandler {
 		$requestUrl = GeneralUtility::getIndpEnv('TYPO3_REQUEST_URL');
 		$parsedRequest = parse_url($requestUrl);
 		$path = trim($parsedRequest['path'], '/');
+		$parts = explode('/', $path);
 
-		return strpos($path, 'iizuna') === 0;
+		return in_array('iizuna', $parts);
 	}
 
 
@@ -87,7 +88,6 @@ class ApiRequestHandler extends AbstractRequestHandler {
 	 */
 	public function handleRequest () {
 		$request = $this->createPartialOutputRequest();
-		$request->setIsCached(false);
 
 		/** @var $response \TYPO3\CMS\Extbase\Mvc\ResponseInterface */
 		$response = $this->objectManager->get(Response::class);
