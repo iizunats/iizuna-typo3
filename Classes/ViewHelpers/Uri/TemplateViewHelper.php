@@ -42,7 +42,6 @@ class TemplateViewHelper extends ActionViewHelper {
 	 * Initialize arguments
 	 */
 	public function initializeArguments () {
-		parent::initializeArguments();
 		$this->registerArgument('templateArguments', 'array', 'need', true);
 	}
 
