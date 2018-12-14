@@ -47,7 +47,14 @@ class PartialOutputController extends ActionController {
 	 */
 	private function getPartialForPath (string $path) {
 		list($url, $arguments) = explode('?', $path);
-		list($iizuna, $extension, $partial) = explode('/', $url, 3);
+		$items = explode('/', $url);
+		$startIndex = array_search('iizuna', $items);
+		$extension = '';
+		for ($i = -1; $i <= $startIndex; $i++) {
+			$extension = array_shift($items);
+		}
+		$partial = implode('/', $items);
+
 		if ($this->partialRegistrationUtility->isRegistered($extension, $partial)) {
 			$configuration = $this->partialRegistrationUtility->getConfiguration($extension, $partial);
 			$passingArguments = [];
@@ -116,7 +123,7 @@ class PartialOutputController extends ActionController {
 		return $this->createTemporaryFileWith($partialContentWithEscapedVariables, function ($tmpFilePath) use ($view) {
 			$view->setTemplatePathAndFilename($tmpFilePath);
 
-			return preg_replace('/IIZUSTART([^|]+)\|IIZUEND/', '\${$1}', $view->render());
+			return preg_replace('/IIZUSTART(.*)(\||%7C)IIZUEND/', '\${$1}', $view->render());
 		});
 	}
 
