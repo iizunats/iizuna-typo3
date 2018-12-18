@@ -118,12 +118,12 @@ class PartialOutputController extends ActionController {
 	 */
 	private function getPartialWithoutVariableContent (TemplateView $view, string $absolutePartialPath): string {
 		$partialContent = GeneralUtility::getURL($absolutePartialPath);
-		$partialContentWithEscapedVariables = preg_replace('/{([^}=:]+)}/', 'IIZUSTART$1|IIZUEND', $partialContent);
+		$partialContentWithEscapedVariables = preg_replace('/{([^}=:]+)}/', 'IIZUSTART$1-IIZUEND', $partialContent);
 
 		return $this->createTemporaryFileWith($partialContentWithEscapedVariables, function ($tmpFilePath) use ($view) {
 			$view->setTemplatePathAndFilename($tmpFilePath);
 
-			return preg_replace('/IIZUSTART(.*)(\||%7C)IIZUEND/', '\${$1}', $view->render());
+			return preg_replace('/IIZUSTART([^-]+)-IIZUEND/', '\${$1}', $view->render());
 		});
 	}
 
