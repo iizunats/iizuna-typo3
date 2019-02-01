@@ -34,7 +34,7 @@ class PartialOutputController extends ActionController {
 		$path = trim($rr['path'], '/');
 		$partialContent = $this->getPartialForPath($path);
 
-		exit($partialContent);
+		return $partialContent;
 	}
 
 

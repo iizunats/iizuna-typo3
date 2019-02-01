@@ -88,12 +88,15 @@ class ApiRequestHandler extends AbstractRequestHandler {
 	 */
 	public function handleRequest () {
 		$request = $this->createPartialOutputRequest();
-
 		/** @var $response \TYPO3\CMS\Extbase\Mvc\ResponseInterface */
 		$response = $this->objectManager->get(Response::class);
 		$this->dispatcher->dispatch($request, $response);
-
-		return $response;
+		$seconds_to_cache = 60 * 60 * 24 * 30;
+		$ts = gmdate("D, d M Y H:i:s", time() + $seconds_to_cache) . " GMT";
+		header("Expires: $ts");
+		header("Pragma: cache");
+		header("Cache-Control: max-age=$seconds_to_cache");
+		exit($response->getContent());
 	}
 
 
@@ -116,6 +119,7 @@ class ApiRequestHandler extends AbstractRequestHandler {
 		$request->setControllerActionName('render');
 		$request->setRequestUri(GeneralUtility::getIndpEnv('TYPO3_REQUEST_URL'));
 		$request->setBaseUri(GeneralUtility::getIndpEnv('TYPO3_SITE_URL'));
+		$request->setIsCached(true);
 		$request->setMethod($this->environmentService->getServerRequestMethod());
 		$request->setFormat('html');
 
