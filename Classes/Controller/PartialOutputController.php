@@ -59,8 +59,7 @@ class PartialOutputController extends ActionController {
 			$configuration = $this->partialRegistrationUtility->getConfiguration($extension, $partial);
 			$passingArguments = [];
 
-			if (is_array($configuration) || is_object($configuration))
-			{
+			if (is_array($configuration) || is_object($configuration)) {
 			foreach ($configuration[2] as $allowedArguments) {
 				if (isset($_GET[$allowedArguments])) {
 					$passingArguments[$allowedArguments] = strip_tags(urldecode($_GET[$allowedArguments]));
